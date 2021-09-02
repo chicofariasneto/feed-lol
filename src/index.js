@@ -85,4 +85,4 @@ const execScript = async () => {
     const result = await insertMariaDB(data);
     return result;
 }
-execScript.then(console.log);
+execScript().then(console.log);
