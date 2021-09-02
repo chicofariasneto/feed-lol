@@ -4,7 +4,7 @@ const champions = require('./helpers/champions.json');
 const model = {
     champ: 'INSERT INTO league.champion(id, availability, display_name, title) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;',
     spell: 'INSERT INTO league.spell(id, display_name, champion_id) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE id = id;',
-    skin: 'INSERT INTO league.skin(id, availability, name, picture_id, champion_id) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;'
+    skin: 'INSERT INTO league.skin(id, availability, name, picture_id, price, champion_id) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;'
 }
 
 const pool = mariadb.createPool({
@@ -63,10 +63,10 @@ const insertMariaDB = async (data) => {
             }
 
             for (const skin of skins) {
-                const { id: skinId, name, pictureId, availability } = skin;
+                const { id: skinId, name, pictureId, price, availability } = skin;
 
-                // skin (id, availability, name, picture_id, champion_id)
-                await conn.query(model.skins, [skinId, availability, name, pictureId, id]);
+                // skin (id, availability, name, picture_id, price, champion_id)
+                await conn.query(model.skin, [skinId, availability, name, pictureId, price, id]);
                 console.log(`< Skin ${name} has been inserted >`);
             }
             console.log('<===========================================================================>\n');
