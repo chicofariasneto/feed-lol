@@ -47,16 +47,19 @@ const insertMariaDB = async (data) => {
         conn = await pool.getConnection();
 
         for (const element of data) {
+            console.log('<===========================================================================>');
             const { id, displayName, title, availability, spells, skins } = element;
 
             // champion (id, availability, display_name, title)
             await conn.query(model.champ, [id, availability, displayName, title]);
+            console.log(`< ${displayName} has been inserted >`)
 
             for (const spell of spells) {
                 const { id: spellId, displayName } = spell;
 
                 // spell (id, display_name, champion_id)
                 await conn.query(model.spell, [spellId, displayName, id]);
+                console.log(`< Spell ${displayName} has been inserted >`);
             }
 
             for (const skin of skins) {
@@ -64,7 +67,9 @@ const insertMariaDB = async (data) => {
 
                 // skin (id, availability, name, picture_id, price, champion_id)
                 await conn.query(model.skins, [skinId, availability, name, pictureId, price, id]);
+                console.log(`< Skin ${name} has been inserted >`);
             }
+            console.log('<===========================================================================>\n');
         };
 
         return "Everything went well...";
