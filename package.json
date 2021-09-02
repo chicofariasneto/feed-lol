@@ -1,0 +1,9 @@
+{
+  "name": "feed-lol",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "mariadb": "^2.5.4"
+  }
+}
